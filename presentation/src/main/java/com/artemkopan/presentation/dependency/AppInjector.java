@@ -14,7 +14,8 @@ import com.artemkopan.presentation.dependency.component.DaggerAppComponent;
 import com.artemkopan.presentation.dependency.module.ApiModule;
 import com.artemkopan.presentation.dependency.module.AppModule;
 import com.artemkopan.presentation.dependency.module.NetworkModule;
-import com.orhanobut.logger.Logger;
+
+import timber.log.Timber;
 
 @SuppressWarnings("WeakerAccess")
 public class AppInjector {
@@ -86,7 +87,7 @@ public class AppInjector {
         if (activity instanceof Injectable) {
             ((Injectable) activity).inject(this);
         } else {
-            Logger.w("Your activity doesn't injectable %s.\n" +
+            Timber.w("Your activity doesn't injectable %s.\n" +
                      "Implement Injectable interface if you want injectable activity ", activity);
         }
         if (activity instanceof FragmentActivity) {

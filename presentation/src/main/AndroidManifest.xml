@@ -3,6 +3,8 @@
           package="com.artemkopan.presentation"
     >
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name="com.artemkopan.presentation.base.BaseApplication"
         android:allowBackup="true"

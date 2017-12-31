@@ -14,12 +14,12 @@ import android.view.View;
 
 import com.artemkopan.presentation.base.ContentLoadingController.ContentLoadingListener;
 import com.artemkopan.utils.ExtraUtils;
-import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
 
 import dagger.Lazy;
 import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 public abstract class BaseActivity<V extends ViewModel> extends AppCompatActivity implements ContentLoadingListener {
 
@@ -72,7 +72,7 @@ public abstract class BaseActivity<V extends ViewModel> extends AppCompatActivit
      */
     protected void initViewModel() {
         if (viewModelFactory == null) {
-            Logger.w("ViewModelFactory is null! Please, check your dagger inject logic.");
+            Timber.w("ViewModelFactory is null! Please, check your dagger inject logic.");
             return;
         }
         viewModel = ViewModelProviders.of(this, viewModelFactory.get()).get(getViewModelClass());

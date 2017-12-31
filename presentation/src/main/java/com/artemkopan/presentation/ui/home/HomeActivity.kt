@@ -21,6 +21,7 @@ class HomeActivity : BaseActivity<HomeViewModel>(), Injectable {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.getTop().subscribe()
     }
 
 }
