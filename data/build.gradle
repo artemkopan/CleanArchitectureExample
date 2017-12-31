@@ -16,11 +16,12 @@ android {
 dependencies {
     implementation project(':domain')
 
-    api "android.arch.persistence.room:runtime:${arch}"
-    api "android.arch.persistence.room:rxjava2:${arch}"
-    annotationProcessor "android.arch.persistence.room:compiler:${arch}"
-
     api "com.squareup.retrofit2:retrofit:${retrofit}"
+    api "com.squareup.retrofit2:adapter-rxjava2:${retrofit}"
+    api "com.squareup.retrofit2:converter-gson:${retrofit}"
+
+    api "com.squareup.okhttp3:okhttp:${okHttp}"
+    api "com.squareup.okhttp3:logging-interceptor:${okHttp}"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }

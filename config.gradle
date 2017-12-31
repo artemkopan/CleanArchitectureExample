@@ -1,6 +1,6 @@
 //Additional data
 ext {
-    API_URL = "http://google.com"
+    API_URL = "https://www.reddit.com/api/"
 }
 
 //Android apps' versions

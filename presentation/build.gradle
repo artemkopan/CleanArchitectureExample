@@ -49,4 +49,8 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:${arch}"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    debugImplementation "com.facebook.stetho:stetho:${stetho}"
+    debugImplementation "com.facebook.stetho:stetho-okhttp3:${stetho}"
+    releaseImplementation "net.igenius:stetho-no-op:1.1"
 }
