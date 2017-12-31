@@ -1,0 +1,28 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion compileSdk
+
+    defaultConfig {
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+        versionCode rootProject.totalVersionCode
+        versionName rootProject.versionName
+    }
+
+}
+
+dependencies {
+
+    api "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+
+    api "javax.inject:javax.inject:${javaxVersion}"
+
+    api "com.google.code.gson:gson:${gson}"
+
+    api "com.github.artemkopan:base-utils:${baseProject}"
+    api "com.orhanobut:logger:${loger}"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+}

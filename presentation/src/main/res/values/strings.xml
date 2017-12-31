@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="error_undefined">Unexpected error. Please, try again</string>
+    <string name="error_internet_connection">No internet connection or server is unavailable</string>
+    <string name="error_internet_timeout">Request timeout. Please, try again</string>
+
+</resources>

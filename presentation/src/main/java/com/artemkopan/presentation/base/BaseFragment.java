@@ -1,0 +1,141 @@
+package com.artemkopan.presentation.base;
+
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.artemkopan.presentation.base.ContentLoadingController.ContentLoadingListener;
+import com.orhanobut.logger.Logger;
+
+import javax.inject.Inject;
+
+import dagger.Lazy;
+import io.reactivex.disposables.CompositeDisposable;
+
+public abstract class BaseFragment<V extends ViewModel> extends Fragment implements ContentLoadingListener {
+
+    protected CompositeDisposable onStopDisposable = new CompositeDisposable();
+    protected CompositeDisposable onDestroyViewDisposable = new CompositeDisposable();
+    protected V viewModel;
+    @Inject
+    protected Lazy<ViewModelProvider.Factory> viewModelFactory;
+    private PresentationDelegate presentationDelegate;
+    private ContentLoadingController contentLoadingController;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        presentationDelegate = new PresentationDelegate(context);
+        contentLoadingController = new ContentLoadingController();
+        contentLoadingController.setListener(this);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (getContentView() != View.NO_ID) {
+            return inflater.inflate(getContentView(), container, false);
+        } else {
+            return super.onCreateView(inflater, container, savedInstanceState);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initViewModel();
+    }
+
+    @Override
+    public void onStop() {
+        onStopDisposable.clear();
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        contentLoadingController.clear();
+        onDestroyViewDisposable.clear();
+        super.onDestroyView();
+    }
+
+    @LayoutRes
+    protected abstract int getContentView();
+
+    protected abstract Class<V> getViewModelClass();
+
+    /**
+     * If you don't want to init view model, you can override method and stay empty
+     */
+    protected void initViewModel() {
+        if (viewModelFactory == null) {
+            Logger.w("ViewModelFactory is null! Please, check your dagger inject logic.");
+            return;
+        }
+        viewModel = ViewModelProviders.of(this, viewModelFactory.get()).get(getViewModelClass());
+    }
+
+    public BaseActivity getBaseActivity() {
+        return (BaseActivity) getActivity();
+    }
+
+    public void showError(Throwable throwable) {
+        presentationDelegate.showError(throwable);
+    }
+
+    public void showError(@Nullable Object tag, Throwable throwable) {
+        presentationDelegate.showError(throwable);
+    }
+
+    public void showError(@Nullable Object tag, @StringRes int errorRes) {
+        presentationDelegate.showError(errorRes);
+    }
+
+    public void showError(@Nullable Object tag, String error) {
+        presentationDelegate.showError(error);
+    }
+
+    public void showProgress() {
+        showProgress(null);
+    }
+
+    public void showProgress(@Nullable Object tag) {
+        presentationDelegate.showProgress();
+    }
+
+    public void showProgressContent() {
+        contentLoadingController.show();
+    }
+
+    public void hideProgress() {
+        hideProgress(null);
+    }
+
+    public void hideProgress(@Nullable Object tag) {
+        presentationDelegate.hideProgress();
+    }
+
+    public void hideProgressContent() {
+        contentLoadingController.hide();
+    }
+
+    @Override
+    public void onShowContentProgress() {
+        showProgress();
+    }
+
+    @Override
+    public void onHideContentProgress() {
+        hideProgress();
+    }
+}

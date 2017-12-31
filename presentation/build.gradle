@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion compileSdk
+    buildToolsVersion buildTools
+
+    defaultConfig {
+        applicationId rootProject.APP_ID
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+        versionCode rootProject.totalVersionCode
+        versionName rootProject.versionName
+        vectorDrawables.useSupportLibrary = true
+
+        resValue 'string', 'app_name', "\"$APP_NAME\""
+        buildConfigField 'String', 'API_URL', "\"$API_URL\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+androidExtensions {
+    experimental = true
+}
+
+dependencies {
+    api project(':domain')
+    api project(':data')
+
+    implementation "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    implementation "com.android.support:design:${supportLibraryVersion}"
+
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    implementation "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
+
+    implementation "com.google.dagger:dagger:${daggerVersion}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+
+    implementation "android.arch.lifecycle:extensions:${arch}"
+    annotationProcessor "android.arch.lifecycle:compiler:${arch}"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+}
