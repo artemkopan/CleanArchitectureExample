@@ -2,8 +2,11 @@ package com.artemkopan.presentation.ui.home
 
 import android.os.Bundle
 import android.os.Parcelable
+import android.support.transition.Slide
+import android.support.transition.TransitionManager
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Gravity
 import com.artemkopan.domain.Constants.Keys
 import com.artemkopan.domain.utils.addTo
 import com.artemkopan.presentation.R
@@ -75,7 +78,11 @@ class HomeActivity : BaseActivity<HomeViewModel>(), Injectable {
                                    redditRecyclerView.layoutManager.onRestoreInstanceState(managerState)
                                    managerState = null
                                } else {
+                                   val isEmpty = adapter.isEmpty
                                    adapter.list = it
+                                   if (isEmpty) {
+                                       TransitionManager.beginDelayedTransition(redditRecyclerView, Slide(Gravity.BOTTOM))
+                                   }
                                }
 
                                endlessScrollListener.enable(true)
