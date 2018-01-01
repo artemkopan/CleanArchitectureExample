@@ -3,6 +3,7 @@ package com.artemkopan.presentation.ui.home
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import com.artemkopan.domain.utils.addTo
 import com.artemkopan.presentation.R
 import com.artemkopan.presentation.base.BaseActivity
 import com.artemkopan.presentation.dependency.AppInjector
@@ -33,24 +34,40 @@ class HomeActivity : BaseActivity<HomeViewModel>(), Injectable {
         redditRecyclerView.addOnScrollListener(endlessScrollListener)
         redditRecyclerView.adapter = adapter
 
+        swipeRefresh.setOnRefreshListener {
+            viewModel.reset()
+            loadItems()
+        }
+    }
 
-        loadTop()
+    override fun onStart() {
+        super.onStart()
+        loadItems()
     }
 
     private val endlessScrollListener by lazy(NONE) {
         object : EndlessRecyclerViewScrollListener(redditRecyclerView.layoutManager) {
             override fun onLoadMore(totalItemsCount: Int) {
-
+                viewModel.next()
+                loadItems()
             }
         }
     }
 
-    private fun loadTop() {
+    private fun loadItems() {
+        endlessScrollListener.enable(false)
+        if (adapter.isEmpty && !swipeRefresh.isRefreshing) redditRecyclerView.showProgress()
+        else if (!adapter.isEmpty) adapter.showFooter(true)
+
         viewModel
-                .getTop()
+                .loadItems()
                 .subscribe({
+                               adapter.showFooter(false)
+                               redditRecyclerView.hideProgress()
                                swipeRefresh.isRefreshing = false
                                adapter.list = it
+                               endlessScrollListener.enable(true)
                            }, { showError(it) })
+                .addTo(onStopDisposable)
     }
 }

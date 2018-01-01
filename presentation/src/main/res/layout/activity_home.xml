@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.artemkopan.presentation.ui.home.HomeActivity"
     >
 
+    <android.support.v7.widget.Toolbar
+        style="@style/Toolbar.Shadow"
+        app:title="@string/title_top"
+        />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
         >
 
         <com.artemkopan.recycler.view.ExRecyclerView
             android:id="@+id/redditRecyclerView"
+            style="@style/List"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/item_reddit"
@@ -22,4 +30,4 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

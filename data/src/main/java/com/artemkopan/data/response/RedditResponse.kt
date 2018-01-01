@@ -9,7 +9,10 @@ data class RedditResponse(
 
     data class InnerData(
             @field:SerializedName("children")
-            val childrenItem: List<ChildrenItem>? = null
+            val childrenItem: List<ChildrenItem>? = null,
+
+            @field:SerializedName("after")
+            val after: String? = null
     )
 
     data class ChildrenItem(
