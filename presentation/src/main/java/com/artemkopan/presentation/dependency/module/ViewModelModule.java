@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.artemkopan.presentation.dependency.factory.ViewModelFactory;
-import com.artemkopan.presentation.ui.home.HomeViewModel;
+import com.artemkopan.presentation.ui.reddit.RedditViewModel;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -22,8 +22,8 @@ public abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(HomeViewModel.class)
-    abstract ViewModel bindHomeViewModel(HomeViewModel viewModel);
+    @ViewModelKey(RedditViewModel.class)
+    abstract ViewModel bindHomeViewModel(RedditViewModel viewModel);
 
 
 

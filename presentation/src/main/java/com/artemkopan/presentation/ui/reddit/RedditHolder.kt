@@ -1,4 +1,4 @@
-package com.artemkopan.presentation.ui.home
+package com.artemkopan.presentation.ui.reddit
 
 import android.content.Context
 import android.view.View

@@ -6,9 +6,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground"
+    android:background="@drawable/bottom_stroke"
     android:clickable="true"
     android:focusable="true"
+    android:foreground="?selectableItemBackground"
     android:padding="@dimen/spacingNormal"
     android:stateListAnimator="@animator/press_state_list"
     >

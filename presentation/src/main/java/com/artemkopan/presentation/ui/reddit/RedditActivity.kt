@@ -1,4 +1,4 @@
-package com.artemkopan.presentation.ui.home
+package com.artemkopan.presentation.ui.reddit
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -14,19 +14,19 @@ import com.artemkopan.presentation.base.BaseActivity
 import com.artemkopan.presentation.dependency.AppInjector
 import com.artemkopan.presentation.dependency.Injectable
 import com.artemkopan.recycler.listeners.EndlessRecyclerViewScrollListener
-import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_reddit.*
 import javax.inject.Inject
 import kotlin.LazyThreadSafetyMode.NONE
 
 
-class HomeActivity : BaseActivity<HomeViewModel>(), Injectable {
+class RedditActivity : BaseActivity<RedditViewModel>(), Injectable {
 
     @Inject lateinit var adapter: RedditAdapter
     var managerState: Parcelable? = null
 
-    override fun getContentView(): Int = R.layout.activity_home
+    override fun getContentView(): Int = R.layout.activity_reddit
 
-    override fun getViewModelClass(): Class<HomeViewModel> = HomeViewModel::class.java
+    override fun getViewModelClass(): Class<RedditViewModel> = RedditViewModel::class.java
 
     override fun inject(injector: AppInjector) {
         injector.activityComponent.inject(this)
@@ -37,7 +37,6 @@ class HomeActivity : BaseActivity<HomeViewModel>(), Injectable {
         managerState = savedInstanceState?.getParcelable<Parcelable>(Keys.LAYOUT_MANAGER)
 
         redditRecyclerView.layoutManager = LinearLayoutManager(this)
-        redditRecyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         redditRecyclerView.addOnScrollListener(endlessScrollListener)
         redditRecyclerView.adapter = adapter
 

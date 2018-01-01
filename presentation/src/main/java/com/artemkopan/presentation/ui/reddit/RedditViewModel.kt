@@ -1,4 +1,4 @@
-package com.artemkopan.presentation.ui.home
+package com.artemkopan.presentation.ui.reddit
 
 import com.artemkopan.domain.interactor.reddit.GetTopUseCase
 import com.artemkopan.domain.items.RedditItem
@@ -7,7 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(private val getTopUseCase: GetTopUseCase) : BaseViewModel() {
+class RedditViewModel @Inject constructor(private val getTopUseCase: GetTopUseCase) : BaseViewModel() {
 
 
     fun reset() {

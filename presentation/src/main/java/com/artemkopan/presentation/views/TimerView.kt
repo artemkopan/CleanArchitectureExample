@@ -27,7 +27,7 @@ class TimerView @JvmOverloads constructor(context: Context?, attrs: AttributeSet
             val now = SystemClock.uptimeMillis()
             val next = now + (1000 - now % 1000)
 
-            handler.postAtTime(this, next)
+            handler?.postAtTime(this, next)
         }
     }
 

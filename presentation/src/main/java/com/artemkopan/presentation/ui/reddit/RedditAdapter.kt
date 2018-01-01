@@ -1,4 +1,4 @@
-package com.artemkopan.presentation.ui.home
+package com.artemkopan.presentation.ui.reddit
 
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
