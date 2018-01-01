@@ -2,7 +2,10 @@ package com.artemkopan.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class Data(
+data class RedditData(
+
+        @field:SerializedName("subreddit_id")
+        val subredditId: String? = null,
 
         @field:SerializedName("preview")
         val preview: Preview? = null,
@@ -20,13 +23,13 @@ data class Data(
         val author: String? = null,
 
         @field:SerializedName("created")
-        val created: Int? = null,
+        val created: Long? = null,
 
         @field:SerializedName("title")
         val title: String? = null,
 
         @field:SerializedName("created_utc")
-        val createdUtc: Int? = null,
+        val createdUtc: Long? = null,
 
         @field:SerializedName("url")
         val url: String? = null

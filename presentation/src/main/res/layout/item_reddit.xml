@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress XmlUnusedNamespaceDeclaration -->
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="@dimen/spacingNormal"
+    android:stateListAnimator="@animator/press_state_list"
+    >
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/thumbnailImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1,1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.3"
+        tools:src="@android:color/holo_blue_light"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/authorTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacingNormal"
+        android:textColor="@color/colorTextAccent"
+        android:textSize="@dimen/textLarge"
+        app:fontFamily="@font/nunito_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/thumbnailImageView"
+        tools:text="USER NAME"
+        />
+
+    <com.artemkopan.presentation.views.TimerView
+        android:id="@+id/timeTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/spacingSmallest"
+        android:drawableStart="@drawable/ic_clock"
+        android:fontFamily="@font/nunito_semibold"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="@dimen/textSmall"
+        app:layout_constraintEnd_toEndOf="@id/authorTextView"
+        app:layout_constraintStart_toStartOf="@id/authorTextView"
+        app:layout_constraintTop_toBottomOf="@id/authorTextView"
+        tools:text="2 days ago"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/titleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacingSmall"
+        android:fontFamily="@font/nunito_light"
+        app:layout_constraintEnd_toEndOf="@id/authorTextView"
+        app:layout_constraintStart_toStartOf="@id/authorTextView"
+        app:layout_constraintTop_toBottomOf="@id/timeTextView"
+        tools:text="Test test test"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/scoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacingNormal"
+        android:layout_marginTop="@dimen/spacingSmall"
+        android:drawablePadding="@dimen/spacingSmallest"
+        android:drawableStart="@drawable/ic_score"
+        android:fontFamily="@font/nunito_bold"
+        app:layout_constraintEnd_toStartOf="@+id/commentsTextView"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/thumbnailImageView"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        tools:text="20000"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/commentsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacingSmall"
+        android:drawablePadding="@dimen/spacingSmallest"
+        android:drawableStart="@drawable/ic_comment"
+        android:fontFamily="@font/nunito_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        tools:text="2000"
+        />
+
+</android.support.constraint.ConstraintLayout>
