@@ -6,6 +6,25 @@ android {
     compileSdkVersion compileSdk
     buildToolsVersion buildTools
 
+    def keystorePropertiesFile = rootProject.file("keystore.properties")
+    def keystoreProperties = new Properties()
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+    signingConfigs {
+        dev {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
+
     defaultConfig {
         applicationId rootProject.APP_ID
         minSdkVersion minSdk
@@ -19,7 +38,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            signingConfig = signingConfigs.dev
+        }
+
         release {
+            signingConfig = signingConfigs.release  //temp key for demonstration
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
