@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.support.annotation.DrawableRes
 import android.support.annotation.Px
-import android.support.v4.app.FragmentActivity
 import android.widget.ImageView
 import com.artemkopan.presentation.R
 import com.bumptech.glide.Glide
@@ -15,33 +14,16 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.Transformation
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 
-private const val NO_OVERRIDE = -1
-
-fun ImageView.loadImageCircle(source: GlideSource = GlideSource.View(),
-                              model: Any?,
-                              @Px width: Int = NO_OVERRIDE,
-                              @Px height: Int = NO_OVERRIDE,
-                              errorDrawable: GlideHolder = GlideHolder.Res(R.drawable.ic_image_broken_grey_24dp),
-                              placeholderDrawable: GlideHolder = GlideHolder.Res(R.drawable.ic_image_grey_24dp),
-                              animate: Boolean = false,
-                              skipMemoryCache: Boolean = false,
-                              diskCacheStrategy: DiskCacheStrategy = DiskCacheStrategy.ALL,
-                              requestListener: RequestListener<Drawable>? = null,
-                              vararg transformations: Transformation<Bitmap>) {
-    val newTransformations = arrayOf(*transformations, CircleCrop())
-    loadImage(source, model, width, height, errorDrawable, placeholderDrawable, false, animate,
-              skipMemoryCache, diskCacheStrategy, requestListener, *newTransformations)
-}
+const val NO_OVERRIDE = -1
 
 
 @SuppressLint("CheckResult")
 fun ImageView.loadImage(
-        source: GlideSource = GlideSource.View(),
+        source: GlideSource = GlideSource.Context(this.context),
         model: Any?,
         @Px width: Int = NO_OVERRIDE,
         @Px height: Int = NO_OVERRIDE,
@@ -63,7 +45,6 @@ fun ImageView.loadImage(
     }
 
     val request = when (source) {
-        is GlideSource.View -> Glide.with(this)
         is GlideSource.Context -> Glide.with(context.applicationContext)
         is GlideSource.Activity -> Glide.with(source.activity)
         is GlideSource.Fragment -> Glide.with(source.fragment)
@@ -120,19 +101,17 @@ fun ImageView.loadImage(
     request.into(this)
 }
 
-fun ImageView.loadClear(source: GlideSource = GlideSource.View()) {
+fun ImageView.loadClear(source: GlideSource = GlideSource.Context(this.context.applicationContext)) {
     when (source) {
-        is GlideSource.View -> Glide.with(this)
-        is GlideSource.Context -> Glide.with(this.context)
+        is GlideSource.Context -> Glide.with(this.context.applicationContext)
         is GlideSource.Activity -> Glide.with(source.activity)
         is GlideSource.Fragment -> Glide.with(source.fragment)
     }.clear(this)
 }
 
 sealed class GlideSource {
-    class View : GlideSource()
     class Context(val context: android.content.Context) : GlideSource()
-    class Activity(val activity: FragmentActivity) : GlideSource()
+    class Activity(val activity: android.app.Activity) : GlideSource()
     class Fragment(val fragment: android.support.v4.app.Fragment) : GlideSource()
 }
 

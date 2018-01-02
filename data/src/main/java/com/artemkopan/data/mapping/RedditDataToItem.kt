@@ -3,21 +3,22 @@ package com.artemkopan.data.mapping
 import com.artemkopan.data.response.RedditResponse.ChildrenItem
 import com.artemkopan.domain.items.RedditItem
 import com.artemkopan.domain.utils.Mapper
-import com.artemkopan.utils.CollectionUtils
+import java.util.concurrent.TimeUnit
 
 class RedditDataToItem : Mapper<ChildrenItem, RedditItem>() {
 
     override fun map(from: ChildrenItem): RedditItem = with(from.data) {
         RedditItem(
                 subredditId,
-                preview?.images?.let { if (CollectionUtils.isEmpty(it)) "" else it[0]?.mediaSource?.url ?: "" },
+                RedditDataToPreviewItem().map(this),
                 thumbnail,
                 author,
                 title,
-                createdUtc?.let { it * 1000 },
+                createdUtc?.let { TimeUnit.SECONDS.toMillis(it) },
                 numComments,
                 score
         )
     }
+
 
 }

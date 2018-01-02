@@ -7,9 +7,6 @@ data class Preview(
         @field:SerializedName("images")
         val images: List<ImagesItem?>? = null,
 
-        @field:SerializedName("variants")
-        val variants: Variants? = null,
-
         @field:SerializedName("enabled")
         val enabled: Boolean? = null
 )

@@ -1,7 +1,7 @@
 package com.artemkopan.domain.items
 
 data class RedditItem constructor(val id: String?,
-                                  val preview: String?,
+                                  val preview: PreviewItem?,
                                   val thumbnail: String?,
                                   val author: String?,
                                   val title: String?,

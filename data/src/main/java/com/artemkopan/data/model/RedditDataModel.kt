@@ -22,4 +22,5 @@ class RedditDataModel @Inject constructor(private val redditService: RedditServi
                 }
     }
 
+
 }

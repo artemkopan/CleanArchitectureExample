@@ -11,6 +11,7 @@ import com.artemkopan.recycler.adapter.RecyclerListAdapter
 import com.artemkopan.recycler.diff.BaseDiffCallback
 import com.artemkopan.recycler.holder.SimpleHolder
 import com.artemkopan.utils.ViewUtils
+import kotlinx.android.synthetic.main.item_reddit.view.*
 import java.util.*
 import javax.inject.Inject
 
@@ -19,7 +20,9 @@ class RedditAdapter @Inject constructor() : RecyclerListAdapter<RedditItem, Recy
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
             RecyclerBaseAdapter.FOOTER -> SimpleHolder<Any>(ViewUtils.inflateView(parent, R.layout.item_loading))
-            else -> RedditHolder(ViewUtils.inflateView(parent, R.layout.item_reddit))
+            else -> RedditHolder(ViewUtils.inflateView(parent, R.layout.item_reddit)).apply {
+                containerView.setOnClickListener { callOnItemClick(this, it) }
+            }
         }
     }
 

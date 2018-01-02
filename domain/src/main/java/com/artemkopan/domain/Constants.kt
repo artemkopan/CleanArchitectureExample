@@ -8,6 +8,8 @@ object Constants {
     object Keys {
 
         const val LAYOUT_MANAGER = "LAYOUT_MANAGER"
+        const val MEDIA = "MEDIA"
+        const val IS_GIF = "IS_GIF"
 
     }
 

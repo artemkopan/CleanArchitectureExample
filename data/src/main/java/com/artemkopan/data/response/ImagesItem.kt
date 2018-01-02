@@ -8,5 +8,8 @@ data class ImagesItem(
         val mediaSource: MediaSource? = null,
 
         @field:SerializedName("id")
-        val id: String? = null
+        val id: String? = null,
+
+        @field:SerializedName("variants")
+        val variants: Variants? = null
 )

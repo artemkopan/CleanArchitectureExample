@@ -11,6 +11,6 @@
     <dimen name="corner">4dp</dimen>
     <dimen name="elevation">4dp</dimen>
     <dimen name="translationZPressed">4dp</dimen>
-    <dimen name="translationZ">2dp</dimen>
+    <dimen name="translationZ">0dp</dimen>
 
 </resources>

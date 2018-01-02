@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.support.transition.Slide
 import android.support.transition.TransitionManager
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import com.artemkopan.domain.Constants.Keys
@@ -13,6 +12,7 @@ import com.artemkopan.presentation.R
 import com.artemkopan.presentation.base.BaseActivity
 import com.artemkopan.presentation.dependency.AppInjector
 import com.artemkopan.presentation.dependency.Injectable
+import com.artemkopan.presentation.ui.media.MediaPreviewActivity
 import com.artemkopan.recycler.listeners.EndlessRecyclerViewScrollListener
 import kotlinx.android.synthetic.main.activity_reddit.*
 import javax.inject.Inject
@@ -34,7 +34,7 @@ class RedditActivity : BaseActivity<RedditViewModel>(), Injectable {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        managerState = savedInstanceState?.getParcelable<Parcelable>(Keys.LAYOUT_MANAGER)
+        managerState = savedInstanceState?.getParcelable(Keys.LAYOUT_MANAGER)
 
         redditRecyclerView.layoutManager = LinearLayoutManager(this)
         redditRecyclerView.addOnScrollListener(endlessScrollListener)
@@ -43,6 +43,10 @@ class RedditActivity : BaseActivity<RedditViewModel>(), Injectable {
         swipeRefresh.setOnRefreshListener {
             viewModel.reset()
             loadItems()
+        }
+
+        adapter.setOnItemClickListener { _, _, item, _ ->
+            MediaPreviewActivity.show(this, item.preview)
         }
     }
 
@@ -62,16 +66,13 @@ class RedditActivity : BaseActivity<RedditViewModel>(), Injectable {
 
     private fun loadItems() {
         endlessScrollListener.enable(false)
-        if (adapter.isEmpty && !swipeRefresh.isRefreshing) redditRecyclerView.showProgress()
-        else if (!adapter.isEmpty) adapter.showFooter(true)
+        showProgress()
 
         viewModel
                 .loadItems()
+                .doOnError { hideProgress(); endlessScrollListener.enable(true) }
                 .subscribe({
-                               adapter.showFooter(false)
-                               redditRecyclerView.hideProgress()
-                               swipeRefresh.isRefreshing = false
-
+                               hideProgress()
                                if (managerState != null) {
                                    adapter.setList(it, true)
                                    redditRecyclerView.layoutManager.onRestoreInstanceState(managerState)
@@ -87,6 +88,17 @@ class RedditActivity : BaseActivity<RedditViewModel>(), Injectable {
                                endlessScrollListener.enable(true)
                            }, { showError(it) })
                 .addTo(onStopDisposable)
+    }
+
+    override fun showProgress() {
+        if (adapter.isEmpty && !swipeRefresh.isRefreshing) redditRecyclerView.showProgress()
+        else if (!adapter.isEmpty) adapter.showFooter(true)
+    }
+
+    override fun hideProgress() {
+        adapter.showFooter(false)
+        redditRecyclerView.hideProgress()
+        swipeRefresh.isRefreshing = false
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

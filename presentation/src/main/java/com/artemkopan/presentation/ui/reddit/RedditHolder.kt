@@ -6,6 +6,7 @@ import com.artemkopan.domain.items.RedditItem
 import com.artemkopan.presentation.R
 import com.artemkopan.presentation.utils.loadClear
 import com.artemkopan.presentation.utils.loadImage
+import com.artemkopan.recycler.adapter.RecyclerListAdapter
 import com.artemkopan.recycler.holder.BaseHolder
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.extensions.LayoutContainer
@@ -15,6 +16,7 @@ import kotlin.LazyThreadSafetyMode.NONE
 class RedditHolder(override val containerView: View) : BaseHolder<RedditItem>(containerView), LayoutContainer {
 
     private val cornerRadius by lazy(NONE) { containerView.context.resources.getDimensionPixelSize(R.dimen.corner) }
+
 
     override fun bind(context: Context, item: RedditItem, position: Int) {
         with(item) {

@@ -16,4 +16,9 @@
 
     <style name="AppTheme" parent="BaseTheme"/>
 
+    <style name="AppTheme.MediaPreview">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>
