@@ -15,6 +15,8 @@ import com.artemkopan.presentation.dependency.Injectable
 import com.artemkopan.presentation.ui.media.MediaPreviewActivity
 import com.artemkopan.recycler.listeners.EndlessRecyclerViewScrollListener
 import kotlinx.android.synthetic.main.activity_reddit.*
+import timber.log.Timber
+import java.util.concurrent.Callable
 import javax.inject.Inject
 import kotlin.LazyThreadSafetyMode.NONE
 
@@ -50,9 +52,12 @@ class RedditActivity : BaseActivity<RedditViewModel>(), Injectable {
         }
     }
 
+
     override fun onStart() {
         super.onStart()
         loadItems()
+
+        viewModel.test.connect().subscribe({ Timber.d(it.toString()) })
     }
 
     private val endlessScrollListener by lazy(NONE) {
@@ -63,6 +68,7 @@ class RedditActivity : BaseActivity<RedditViewModel>(), Injectable {
             }
         }
     }
+
 
     private fun loadItems() {
         endlessScrollListener.enable(false)

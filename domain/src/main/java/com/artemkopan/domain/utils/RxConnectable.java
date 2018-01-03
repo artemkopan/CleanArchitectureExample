@@ -6,9 +6,10 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
-public abstract class RxConnectable<Type, Model> {
+public abstract class RxConnectable<Type, Model> implements Disposable {
 
     private AtomicBoolean isLoaded = new AtomicBoolean(false);
+
     private Disposable disposable;
 
     protected RxConnectable() {}
@@ -19,11 +20,18 @@ public abstract class RxConnectable<Type, Model> {
 
     public abstract Type connect(boolean fetch);
 
+    @Override
     public void dispose() {
-        if (disposable != null) {
+        isLoaded.set(false);
+        if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
             disposable = null;
         }
+    }
+
+    @Override
+    public boolean isDisposed() {
+        return false;
     }
 
     protected boolean needConnect(boolean fetch) {
@@ -31,7 +39,7 @@ public abstract class RxConnectable<Type, Model> {
             dispose();
             return true;
         }
-        return disposable == null || !isLoaded.get();
+        return !isLoaded.get();
     }
 
     protected Consumer<Disposable> getConnectConsumer() {
@@ -60,5 +68,4 @@ public abstract class RxConnectable<Type, Model> {
             }
         };
     }
-
 }
