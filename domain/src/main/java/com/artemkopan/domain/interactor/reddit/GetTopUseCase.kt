@@ -28,7 +28,7 @@ class GetTopUseCase @Inject constructor(private val redditModel: RedditModel) : 
                 }
                 .toObservable()
                 .replay(1)
-                .delegate()
+                .delegate(null)
     }
 
     fun fetch() {

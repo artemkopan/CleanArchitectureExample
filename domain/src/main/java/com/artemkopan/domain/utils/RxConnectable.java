@@ -1,9 +1,12 @@
 package com.artemkopan.domain.utils;
 
+import android.support.annotation.Nullable;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.internal.disposables.DisposableContainer;
 
 @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
 public abstract class RxConnectable<Type, Model> implements Disposable {
@@ -19,6 +22,11 @@ public abstract class RxConnectable<Type, Model> implements Disposable {
     }
 
     public abstract Type connect(boolean fetch);
+
+    public RxConnectable<Type, Model> addTo(@Nullable DisposableContainer container) {
+        if (container != null) container.add(this);
+        return this;
+    }
 
     @Override
     public void dispose() {
