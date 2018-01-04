@@ -13,7 +13,7 @@ public class RxConnectableObservable<M> extends RxConnectable<Observable<M>, M> 
         this.connectableObservable = observable;
     }
 
-    @CheckResult(suggest = "#addTo(CompositeDisposable)")
+    @CheckResult(suggest = SUGGEST)
     public static <M> RxConnectableObservable<M> create(ConnectableObservable<M> observable) {
         return new RxConnectableObservable<>(observable);
     }

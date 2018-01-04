@@ -2,8 +2,6 @@ package com.artemkopan.domain.utils;
 
 import android.support.annotation.Nullable;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.internal.disposables.DisposableContainer;
@@ -11,7 +9,10 @@ import io.reactivex.internal.disposables.DisposableContainer;
 @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
 public abstract class RxConnectable<Type, Model> implements Disposable {
 
-    private AtomicBoolean isLoaded = new AtomicBoolean(false);
+    protected static final String SUGGEST =  "#addTo(CompositeDisposable)";
+
+    private final Object lock = new Object();
+    private volatile boolean isLoaded = false;
 
     private Disposable disposable;
 
@@ -30,7 +31,9 @@ public abstract class RxConnectable<Type, Model> implements Disposable {
 
     @Override
     public void dispose() {
-        isLoaded.set(false);
+        synchronized (lock) {
+            isLoaded = false;
+        }
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
             disposable = null;
@@ -47,7 +50,7 @@ public abstract class RxConnectable<Type, Model> implements Disposable {
             dispose();
             return true;
         }
-        return !isLoaded.get();
+        return !isLoaded;
     }
 
     protected Consumer<Disposable> getConnectConsumer() {
@@ -63,7 +66,9 @@ public abstract class RxConnectable<Type, Model> implements Disposable {
         return new Consumer<Model>() {
             @Override
             public void accept(Model model) throws Exception {
-                isLoaded.set(true);
+                synchronized (lock) {
+                    isLoaded = true;
+                }
             }
         };
     }
@@ -72,7 +77,9 @@ public abstract class RxConnectable<Type, Model> implements Disposable {
         return new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                isLoaded.set(false);
+                synchronized (lock) {
+                    isLoaded = false;
+                }
             }
         };
     }
