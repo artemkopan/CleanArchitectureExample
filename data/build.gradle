@@ -16,9 +16,12 @@ android {
 dependencies {
     implementation project(':domain')
 
-    api "com.squareup.retrofit2:retrofit:${retrofit}"
-    api "com.squareup.retrofit2:adapter-rxjava2:${retrofit}"
-    api "com.squareup.retrofit2:converter-gson:${retrofit}"
+    implementation "com.github.artemkopan:base-utils:${baseProject}"
+    implementation  "com.jakewharton.timber:timber:${timber}"
+
+    implementation "com.squareup.retrofit2:retrofit:${retrofit}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${retrofit}"
 
     api "com.squareup.okhttp3:okhttp:${okHttp}"
     api "com.squareup.okhttp3:logging-interceptor:${okHttp}"

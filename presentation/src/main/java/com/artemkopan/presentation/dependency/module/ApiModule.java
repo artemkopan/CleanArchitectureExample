@@ -1,6 +1,7 @@
 package com.artemkopan.presentation.dependency.module;
 
 import com.artemkopan.data.api.RedditService;
+import com.artemkopan.presentation.utils.GlideSource.Context;
 
 import javax.inject.Singleton;
 

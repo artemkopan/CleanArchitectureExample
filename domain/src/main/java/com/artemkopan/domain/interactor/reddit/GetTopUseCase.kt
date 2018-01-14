@@ -9,6 +9,7 @@ import com.artemkopan.domain.utils.delegate
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 import javax.inject.Inject
 
 class GetTopUseCase @Inject constructor(private val redditModel: RedditModel) : ObservableUseCase<List<RedditItem>> {
@@ -17,6 +18,7 @@ class GetTopUseCase @Inject constructor(private val redditModel: RedditModel) : 
 
     private val observable by lazy {
         paginator = Paginator()
+
 
         Single.fromCallable { paginator.next }
                 .subscribeOn(Schedulers.io())

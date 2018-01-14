@@ -27,7 +27,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkhttp(Context context) {
+    static OkHttpClient provideOkhttp(Context context) {
 
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
                 .followRedirects(true)

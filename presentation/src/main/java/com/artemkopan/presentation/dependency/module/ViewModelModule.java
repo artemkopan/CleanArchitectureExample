@@ -25,8 +25,6 @@ public abstract class ViewModelModule {
     @ViewModelKey(RedditViewModel.class)
     abstract ViewModel bindHomeViewModel(RedditViewModel viewModel);
 
-
-
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
 

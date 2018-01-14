@@ -1,6 +1,6 @@
 package com.artemkopan.domain.utils;
 
-import android.support.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -9,7 +9,7 @@ import io.reactivex.internal.disposables.DisposableContainer;
 @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
 public abstract class RxConnectable<Type, Model> implements Disposable {
 
-    protected static final String SUGGEST =  "#addTo(CompositeDisposable)";
+    protected static final String SUGGEST = "#addTo(CompositeDisposable)";
 
     private final Object lock = new Object();
     private volatile boolean isLoaded = false;

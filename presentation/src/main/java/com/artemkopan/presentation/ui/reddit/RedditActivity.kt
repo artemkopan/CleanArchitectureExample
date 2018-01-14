@@ -13,10 +13,10 @@ import com.artemkopan.presentation.base.BaseActivity
 import com.artemkopan.presentation.dependency.AppInjector
 import com.artemkopan.presentation.dependency.Injectable
 import com.artemkopan.presentation.ui.media.MediaPreviewActivity
+import com.artemkopan.presentation.ui.media.PreviewItemToPreview
 import com.artemkopan.recycler.listeners.EndlessRecyclerViewScrollListener
 import kotlinx.android.synthetic.main.activity_reddit.*
 import timber.log.Timber
-import java.util.concurrent.Callable
 import javax.inject.Inject
 import kotlin.LazyThreadSafetyMode.NONE
 
@@ -48,7 +48,9 @@ class RedditActivity : BaseActivity<RedditViewModel>(), Injectable {
         }
 
         adapter.setOnItemClickListener { _, _, item, _ ->
-            MediaPreviewActivity.show(this, item.preview)
+            item?.preview?.let {
+                MediaPreviewActivity.show(this, PreviewItemToPreview().map(it))
+            }
         }
     }
 

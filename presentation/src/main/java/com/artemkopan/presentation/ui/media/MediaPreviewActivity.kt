@@ -15,11 +15,12 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import kotlinx.android.synthetic.main.activity_media_preview.*
+import timber.log.Timber
 
 class MediaPreviewActivity : Activity() {
 
     companion object {
-        fun show(activity: Activity, url: PreviewItem?) {
+        fun show(activity: Activity, url: Preview?) {
             val intent = Intent(activity, MediaPreviewActivity::class.java)
             intent.putExtra(Keys.MEDIA, url)
             activity.startActivity(intent)
@@ -31,7 +32,7 @@ class MediaPreviewActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_media_preview)
 
-        intent.getParcelableExtra<PreviewItem>(Keys.MEDIA)?.let {
+        intent.getParcelableExtra<Preview>(Keys.MEDIA)?.let {
             with(if (it.isGif == true)
                      Glide.with(this).asGif().listener(RequestListenerImpl())
                  else
